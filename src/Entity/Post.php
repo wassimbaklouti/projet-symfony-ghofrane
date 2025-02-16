@@ -27,11 +27,11 @@ class Post
     private ?string $contenu = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\NotBlank(message: "Date cannot be blank.")]
+    // #[Assert\NotBlank(message: "Date cannot be blank.")]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Image cannot be blank.")]
+    // #[Assert\NotBlank(message: "Image cannot be blank.")]
     private ?string $image = null;
 
     #[Assert\Image(

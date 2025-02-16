@@ -45,29 +45,37 @@ class PostController extends AbstractController
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $post->setDate(new \DateTime());
-            /** @var UploadedFile $imageFile */
-            $imageFile = $form->get('imageFile')->getData();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                // Set current date
+                $post->setDate(new \DateTime());
 
-            if ($imageFile) {
-                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                /** @var UploadedFile|null $imageFile */
+                $imageFile = $form->get('imageFile')->getData();
 
-                try {
-                    $imageFile->move(
-                        $this->getParameter('post_images_directory'),
-                        $newFilename
-                    );
-                    $post->setImage($newFilename);
-                } catch (FileException $e) {
-                    $this->addFlash('error', 'Failed to upload image.');
+                if ($imageFile) {
+                    $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('post_images_directory'),
+                            $newFilename
+                        );
+                        $post->setImage($newFilename);
+                    } catch (FileException $e) {
+                        $this->addFlash('error', 'Failed to upload image: ' . $e->getMessage());
+                        return $this->redirectToRoute('app_post_new');
+                    }
                 }
+
+                $entityManager->persist($post);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Post added successfully!');
+                return $this->redirectToRoute('app_post_index');
+            } else {
+                $this->addFlash('error', 'Form validation failed. Please check your input.');
             }
-
-            $entityManager->persist($post);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_post_index');
         }
 
         return $this->render('post/new.html.twig', [
