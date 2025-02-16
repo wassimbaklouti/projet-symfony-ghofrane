@@ -1,0 +1,139 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Create New Post{% endblock %}
+
+{% block custom_css %}
+    
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .post-form-container {
+        max-width: 600px;
+        margin: auto;
+        padding: 30px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-form h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .post-form h2 i {
+        font-size: 26px;
+        color: #ff6b6b;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        border-radius: 6px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .form-error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .btn-primary {
+        background-color: #9BAB10;
+        border: none;
+        padding: 12px 15px;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+        background-color: #016537;
+    }
+
+    .btn-secondary {
+        background-color: #eeeeee;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-align: center;
+        display: block;
+        margin-top: 15px;
+        color: #342E37;
+    }
+
+    .btn-secondary:hover {
+        background-color: #AAAAAA;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="post-form-container">
+        <h2><i class="bx bx-edit"></i> Create New Post</h2>
+
+        {{ form_start(form, {'attr': {'class': 'post-form', 'enctype': 'multipart/form-data', 'novalidate': 'novalidate'}}) }}
+
+        <!-- Title Field -->
+        <div class="form-group">
+            {{ form_label(form.titre) }}
+            {{ form_widget(form.titre, {'attr': {'class': 'form-control', 'placeholder': 'Enter post title'}}) }}
+            {% if form_errors(form.titre) %}
+                <span class="form-error">{{ form_errors(form.titre) }}</span>
+            {% endif %}
+        </div>
+
+        <!-- Content Field -->
+        <div class="form-group">
+            {{ form_label(form.contenu) }}
+            {{ form_widget(form.contenu, {'attr': {'class': 'form-control', 'placeholder': 'Enter post content'}}) }}
+            {% if form_errors(form.contenu) %}
+                <span class="form-error">{{ form_errors(form.contenu) }}</span>
+            {% endif %}
+        </div>
+
+        <!-- Image Upload Field -->
+        <div class="form-group">
+            {{ form_label(form.imageFile) }}
+            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+            {% if form_errors(form.imageFile) %}
+                <span class="form-error">{{ form_errors(form.imageFile) }}</span>
+            {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <button class="btn btn-primary">{{ button_label|default('Save Post') }}</button>
+
+        {{ form_end(form) }}
+
+        <!-- Back Button -->
+        <a href="{{ path('app_post_index') }}" class="btn btn-secondary">
+            <i class="bx bx-arrow-back"></i> Back to List
+        </a>
+    </div>
+</div>
+{% endblock %}

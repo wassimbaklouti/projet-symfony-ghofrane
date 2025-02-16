@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Like</title>
+
+{% block body %}
+    <h1>Edit Like</h1>
+
+    {{ include('like/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_like_index') }}">back to list</a>
+
+    {{ include('like/_delete_form.html.twig') }}
+{% endblock %}

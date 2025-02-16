@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {# Boxicons #}
+    <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
+    
+    {# Custom CSS – adjust the path as needed #}
+    <link rel="stylesheet" href="{{ asset('assets-back/style.css') }}">
+
+    <title>{% block title %}Dashboard{% endblock %}</title>
+
+    {# Ensuring block styles from child templates are properly applied #}
+    <style>
+        /* Page container */
+        .post-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Post Item */
+        .post-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f9f9f9;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .post-item:hover {
+            background: #f1f1f1;
+            transform: scale(1.01);
+        }
+
+        /* Left section (image + text) */
+        .post-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .post-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #ddd;
+        }
+
+        .post-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .post-content {
+            font-size: 0.9rem;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
+        }
+
+        /* Right Section (Date & Actions) */
+        .post-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .post-date {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-show {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: black;
+        }
+
+        .btn-show:hover, .btn-edit:hover {
+            opacity: 0.8;
+        }
+
+        .btn-create-new {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        .btn-create-new:hover {
+            background: #218838;
+        }
+
+        {% block custom_css %}{% endblock %}
+    </style>
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {# SIDEBAR – persists across pages #}
+    {% block sidebar %}
+    <section id="sidebar">
+        <a href="#" class="brand">
+            <span class="text">
+                <img src="{{ asset('assets-back/img/logo.png') }}" alt="Logo">
+            </span>
+        </a>
+        <ul class="side-menu top">
+            <li class="active">
+                <a href="#">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#"><i class='bx bxs-group'></i><span class="text">Utilisateurs</span></a>
+            </li>
+            <li>
+                <a href="#"><i class='bx bxs-box'></i><span class="text">Produits</span></a>
+            </li>
+            <li>
+                <a href="#"><i class='bx bxs-comment'></i><span class="text">Forum</span></a>
+            </li>
+            <li>
+                <a href="#"><i class='bx bxs-cart'></i><span class="text">E-commerce</span></a>
+            </li>
+        </ul>
+    </section>
+    {% endblock %}
+
+    <section id="content">
+        {% block navbar %}
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="#" class="nav-link">Categories</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="profile">
+                <img src="{{ asset('assets-back/img/zied.jpg') }}" alt="Profile">
+            </a>
+        </nav>
+        {% endblock %}
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </section>
+
+    <script src="{{ asset('assets-back/script.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+</body>
+</html>
